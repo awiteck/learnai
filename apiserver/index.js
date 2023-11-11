@@ -5,7 +5,6 @@ const { Pool } = require("pg");
 
 const app = express();
 const port = process.env.PORT || 3000;
-const connectionString = process.env.DATABASE_URL;
 
 const pool = new Pool({
   connectionString: process.env.DB_URL,
@@ -22,7 +21,8 @@ app.get("/", (req, res) => {
 app.get("/facts/:topic", async (req, res) => {
   try {
     const { topic } = req.params;
-    const result = await pool.query("SELECT * FROM facts WHERE topic = $1", [
+    const result = await pool.query("SELECT facts.* FROM facts INNER JOIN topics ON facts.topic_id = topics.topic_id WHERE topics.topic_name = $1;",
+    [
       topic,
     ]);
     res.json(result.rows);
@@ -32,6 +32,10 @@ app.get("/facts/:topic", async (req, res) => {
   }
 });
 
+
+
+
+// User Registration
 app.post("/register", async (req, res) => {
   const { email, firebase_uid } = req.body;
 
