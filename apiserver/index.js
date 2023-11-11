@@ -51,6 +51,53 @@ app.get("/facts/:topic", async (req, res) => {
   }
 });
 
+app.post('/facts/:factId/upvote', async (req, res) => {
+  const { factId } = req.params;
+  const userUid = req.user.uid; // Assuming req.user.uid is set after authentication
+
+  try {
+    // Insert the upvote record into the users_upvoted table
+    const result = await pool.query(`
+      INSERT INTO users_upvoted (user_id, fact_id)
+      SELECT u.user_id, $1 FROM users u WHERE u.firebase_uid = $2
+      ON CONFLICT (user_id, fact_id) DO NOTHING;
+    `, [factId, userUid]);
+
+    if (result.rowCount === 0) {
+      return res.status(409).send('Fact already upvoted by the user.');
+    }
+
+    res.status(200).send('Fact upvoted successfully.');
+  } catch (error) {
+    console.error('Error upvoting fact:', error);
+    res.status(500).send('Internal server error.');
+  }
+});
+
+app.post('/facts/:factId/downvote', async (req, res) => {
+  const { factId } = req.params;
+  const userUid = req.user.uid; // Assuming req.user.uid is set after authentication
+
+  try {
+    // Insert the downvote record into the users_downvoted table
+    const result = await pool.query(`
+      INSERT INTO users_downvoted (user_id, fact_id)
+      SELECT u.user_id, $1 FROM users u WHERE u.firebase_uid = $2
+      ON CONFLICT (user_id, fact_id) DO NOTHING;
+    `, [factId, userUid]);
+
+    if (result.rowCount === 0) {
+      return res.status(409).send('Fact already downvoted by the user.');
+    }
+
+    res.status(200).send('Fact downvoted successfully.');
+  } catch (error) {
+    console.error('Error downvoting fact:', error);
+    res.status(500).send('Internal server error.');
+  }
+});
+
+
 // User Registration
 app.post("/register", async (req, res) => {
   const { email, firebase_uid } = req.body;
