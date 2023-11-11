@@ -3,6 +3,13 @@ require("dotenv").config();
 const express = require("express");
 const { Pool } = require("pg");
 
+// Firebase
+var admin = require("firebase-admin");
+var serviceAccount = require("path/to/serviceAccountKey.json");
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
 const app = express();
 const port = process.env.PORT || 3000;
 const connectionString = process.env.DATABASE_URL;
@@ -34,6 +41,34 @@ app.get("/facts/:topic", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
+  }
+});
+
+app.post("/register", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Create user with Firebase Authentication
+    const userRecord = await admin.auth().createUser({
+      email,
+      password,
+    });
+
+    // Insert new user into PostgreSQL users table
+    const queryResult = await pool.query(
+      "INSERT INTO users(firebase_uid, email) VALUES($1, $2) RETURNING id",
+      [userRecord.uid, email]
+    );
+
+    // Respond with the created user's ID from your database
+    res.status(201).json({ userId: queryResult.rows[0].id });
+  } catch (err) {
+    console.error(err);
+    if (err.code === "auth/email-already-exists") {
+      res.status(400).send("Email already exists.");
+    } else {
+      res.status(500).send("Internal server error.");
+    }
   }
 });
 
