@@ -7,10 +7,19 @@
 
 import Foundation
 
-struct Story : Codable, Identifiable {
+struct Story: Identifiable {
     let id: String
     let title: String
     let content: String
-    let follow_up : String
+    let followUpQuestion: String
     let categories: [String?]?
+
+    // Initialize with unique ID
+    init(title: String, content: String, followUpQuestion: String, categories: [String?]?) {
+        self.id = UUID().uuidString
+        self.title = title
+        self.content = content
+        self.followUpQuestion = followUpQuestion
+        self.categories = categories
+    }
 }

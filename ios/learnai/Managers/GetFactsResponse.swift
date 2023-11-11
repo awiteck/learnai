@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct GetFactsResponse : Codable {
-    let facts: [Story]
-}
+//struct GetFactsResponse : Codable {
+//    let id: String
+//    let facts: [Story]
+//}
 

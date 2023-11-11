@@ -28,18 +28,18 @@ struct SignUpView: View {
 
             Button("Sign Up") {
                 isLoading = true // Start loading
-//                isLoading = false
-//                userSessionViewModel.userDidLogIn()
-                APICaller.shared.createUser(email: email, password: password) { success in
-                    DispatchQueue.main.async {
-                        isLoading = false // Stop loading
-                        if success {
-                            userSessionViewModel.userDidLogIn()
-                        } else {
-                            // Handle sign-up failure
-                        }
-                    }
-                }
+                isLoading = false
+                userSessionViewModel.userDidLogIn()
+//                APICaller.shared.createUser(email: email, password: password) { success in
+//                    DispatchQueue.main.async {
+//                        isLoading = false // Stop loading
+//                        if success {
+//                            userSessionViewModel.userDidLogIn()
+//                        } else {
+//                            // Handle sign-up failure
+//                        }
+//                    }
+//                }
                 
 //                signUpUser(email: email, password: password) { success in
 //                    DispatchQueue.main.async {
