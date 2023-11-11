@@ -52,6 +52,9 @@
 		07CAA4E12B000502003F3814 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 07CAA4E02B000502003F3814 /* FirebaseStorage */; };
 		07CAA4E32B000502003F3814 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 07CAA4E22B000502003F3814 /* FirebaseStorageCombine-Community */; };
 		07CAA4E52B0005BC003F3814 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 07CAA4E42B0005BC003F3814 /* GoogleService-Info.plist */; };
+		07CAA4E72B0026BC003F3814 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CAA4E62B0026BC003F3814 /* APICaller.swift */; };
+		07CAA4E92B003930003F3814 /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CAA4E82B003930003F3814 /* Story.swift */; };
+		07CAA4EB2B003A3C003F3814 /* GetFactsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CAA4EA2B003A3C003F3814 /* GetFactsResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +78,9 @@
 		07CAA4AA2AFFF9AD003F3814 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		07CAA4AB2AFFFED7003F3814 /* Bitter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bitter-Bold.ttf"; sourceTree = "<group>"; };
 		07CAA4E42B0005BC003F3814 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		07CAA4E62B0026BC003F3814 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
+		07CAA4E82B003930003F3814 /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Story.swift; path = learnai/Managers/Story.swift; sourceTree = SOURCE_ROOT; };
+		07CAA4EA2B003A3C003F3814 /* GetFactsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GetFactsResponse.swift; path = learnai/Managers/GetFactsResponse.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +166,8 @@
 		07C097212AFF196500FB508E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				07CAA4E82B003930003F3814 /* Story.swift */,
+				07CAA4EA2B003A3C003F3814 /* GetFactsResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -192,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				07C0972B2AFF1AE300FB508E /* AuthManager.swift */,
+				07CAA4E62B0026BC003F3814 /* APICaller.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -319,8 +328,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				07C0972E2AFF1E9000FB508E /* UserInterestViewModel.swift in Sources */,
+				07CAA4EB2B003A3C003F3814 /* GetFactsResponse.swift in Sources */,
 				07C097322AFF1F7800FB508E /* MainView.swift in Sources */,
 				07C0972A2AFF1ACA00FB508E /* StoryView.swift in Sources */,
+				07CAA4E72B0026BC003F3814 /* APICaller.swift in Sources */,
 				07C0972C2AFF1AE300FB508E /* AuthManager.swift in Sources */,
 				07C097162AFF17BB00FB508E /* ContentView.swift in Sources */,
 				07C097262AFF1A5C00FB508E /* FeedView.swift in Sources */,
@@ -331,6 +342,7 @@
 				07C097392AFF28ED00FB508E /* FontText.swift in Sources */,
 				07C097142AFF17BB00FB508E /* learnaiApp.swift in Sources */,
 				07C097282AFF1AB100FB508E /* StoryContainerView.swift in Sources */,
+				07CAA4E92B003930003F3814 /* Story.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

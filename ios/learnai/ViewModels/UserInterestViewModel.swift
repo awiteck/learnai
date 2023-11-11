@@ -31,8 +31,6 @@ enum Interest: String, CaseIterable {
     case classicalMusic = "Classical Music & Opera"
 }
 
-
-
 class UserInterestViewModel: ObservableObject {
     @Published var selectedInterests: Set<Interest> = []
     

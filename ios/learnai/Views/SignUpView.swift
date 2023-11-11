@@ -18,7 +18,6 @@ struct SignUpView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            FontText(text: "SIGN YO BITCH ASS UP!")
             TextField("Email", text: $email)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .autocapitalization(.none)
@@ -29,7 +28,9 @@ struct SignUpView: View {
 
             Button("Sign Up") {
                 isLoading = true // Start loading
-                signUpUser(email: email, password: password) { success in
+//                isLoading = false
+//                userSessionViewModel.userDidLogIn()
+                APICaller.shared.createUser(email: email, password: password) { success in
                     DispatchQueue.main.async {
                         isLoading = false // Stop loading
                         if success {
@@ -39,6 +40,17 @@ struct SignUpView: View {
                         }
                     }
                 }
+                
+//                signUpUser(email: email, password: password) { success in
+//                    DispatchQueue.main.async {
+//                        isLoading = false // Stop loading
+//                        if success {
+//                            userSessionViewModel.userDidLogIn()
+//                        } else {
+//                            // Handle sign-up failure
+//                        }
+//                    }
+//                }
             }
             .padding()
             .frame(maxWidth: .infinity)
@@ -62,17 +74,17 @@ struct SignUpView: View {
         }
     }
     
-    func signUpUser(email: String, password: String, completion: @escaping (Bool) -> Void) {
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            if let error = error {
-                print("Sign up error: \(error.localizedDescription)")
-                completion(false)
-                return
-            }
-            // Check authResult for further customization if needed
-            completion(true)
-        }
-    }
+//    func signUpUser(email: String, password: String, completion: @escaping (Bool) -> Void) {
+//        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+//            if let error = error {
+//                print("Sign up error: \(error.localizedDescription)")
+//                completion(false)
+//                return
+//            }
+//            // Check authResult for further customization if needed
+//            completion(true)
+//        }
+//    }
 }
 
 struct SignUpView_Previews: PreviewProvider {
