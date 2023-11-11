@@ -138,7 +138,7 @@ app.post("/register", async (req, res) => {
   try {
     // Insert new user into PostgreSQL users table
     const queryResult = await pool.query(
-      "INSERT INTO users(firebase_uid, email) VALUES($1, $2) RETURNING id",
+      "INSERT INTO users(firebase_uid, email) VALUES($1, $2) RETURNING user_id",
       [firebase_uid, email]
     );
 
