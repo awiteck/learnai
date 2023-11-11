@@ -5,7 +5,7 @@ const { Pool } = require("pg");
 
 // Firebase
 var admin = require("firebase-admin");
-var serviceAccount = require("./learnai-42cfd-firebase-adminsdk-z1h06-998491a32b.json");
+var serviceAccount = require("./firebase-service-account.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
