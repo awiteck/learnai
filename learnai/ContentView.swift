@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+    @StateObject private var userSessionViewModel = UserSessionViewModel()
 
-#Preview {
-    ContentView()
+    var body: some View {
+        NavigationView {
+            if !userSessionViewModel.isLoggedIn {
+//                LoginView() // Replace with your actual login view
+                InterestSelectionView(viewModel: UserInterestViewModel())
+            } else if !userSessionViewModel.hasSelectedPreferences {
+                InterestSelectionView(viewModel: UserInterestViewModel())
+            } else {
+                FeedView() // Replace with your actual infinite scrolling view
+            }
+        }
+    }
 }
