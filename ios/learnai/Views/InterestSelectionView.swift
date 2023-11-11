@@ -15,9 +15,18 @@ struct InterestSelectionView: View {
     var body: some View {
         VStack {
             List(Interest.allCases, id: \.self) { interest in
-                // Existing list code
+                HStack {
+                    Text(interest.rawValue)
+                    Spacer()
+                    if viewModel.selectedInterests.contains(interest) {
+                        Image(systemName: "checkmark")
+                    }
+                }
+                .onTapGesture {
+                    viewModel.toggleInterest(interest)
+                }
             }
-
+            
             Button("Let's Go") {
                 navigateToFeed = true
             }
