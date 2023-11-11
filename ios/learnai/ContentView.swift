@@ -13,13 +13,14 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             if !userSessionViewModel.isLoggedIn {
-//                LoginView() // Replace with your actual login view
-                InterestSelectionView(viewModel: UserInterestViewModel())
+                SignUpView() // Replace with your actual login view
+//                InterestSelectionView(viewModel: UserInterestViewModel())
             } else if !userSessionViewModel.hasSelectedPreferences {
                 InterestSelectionView(viewModel: UserInterestViewModel())
             } else {
                 FeedView() // Replace with your actual infinite scrolling view
             }
         }
+        .environmentObject(userSessionViewModel)
     }
 }

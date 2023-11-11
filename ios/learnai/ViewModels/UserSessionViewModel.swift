@@ -12,5 +12,13 @@ class UserSessionViewModel: ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var hasSelectedPreferences: Bool = false
 
-    // Methods to handle login, logout, and preference setting
+    // Call this method when the user successfully signs up
+    func userDidLogIn() {
+        isLoggedIn = true
+        hasSelectedPreferences = false // Assuming new users need to select preferences
+    }
+    
+    func userDidSelectInterests() {
+        hasSelectedPreferences = true
+    }
 }
