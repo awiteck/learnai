@@ -51,6 +51,39 @@ app.get("/facts/:topic", async (req, res) => {
   }
 });
 
+app.get('/facts/unviewed/interests', async (req, res) => {
+  const userUid = req.user.uid; // Assuming req.user.uid is set after authentication
+  const limit = 5; // The batch size of unviewed facts to retrieve
+
+  try {
+    // Get the user_id from the users table using the firebase_uid
+    const userResult = await pool.query('SELECT user_id FROM users WHERE firebase_uid = $1', [userUid]);
+    if (userResult.rows.length === 0) {
+      return res.status(404).send('User not found.');
+    }
+    const userId = userResult.rows[0].user_id;
+
+    // Select 5 unviewed facts whose topics are within the user's topics of interest
+    const factsResult = await pool.query(`
+      SELECT f.fact_id, f.fact_title, f.fact_text, f.topic_id
+      FROM facts f
+      INNER JOIN users_topics ut ON f.topic_id = ut.topic_id
+      LEFT JOIN users_viewed uv ON f.fact_id = uv.fact_id AND uv.user_id = $1
+      WHERE uv.fact_id IS NULL AND ut.user_id = $1
+      GROUP BY f.fact_id, f.fact_title, f.fact_text, f.topic_id
+      ORDER BY f.fact_id
+      LIMIT $2;
+    `, [userId, limit]);
+
+    // Respond with the facts
+    res.json(factsResult.rows);
+  } catch (error) {
+    console.error('Error retrieving unviewed facts within user interests:', error);
+    res.status(500).send('Internal server error.');
+  }
+});
+
+
 app.post('/facts/:factId/upvote', async (req, res) => {
   const { factId } = req.params;
   const userUid = req.user.uid; // Assuming req.user.uid is set after authentication
