@@ -1,0 +1,114 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "LearnAI API"
+  description: "API for LearnAI"
+host: "api.learnai.com" # modify later
+basePath: "/v1"
+schemes:
+- "https"
+
+paths:
+  /videos/next:
+    get:
+      summary: "Get next video content"
+      description: "Retrieve the next video content based on user interaction and preferences."
+      parameters:
+      - name: "preference"
+        in: "query"
+        type: "string"
+        required: false
+        description: "User preference based on button pressed."
+      responses:
+        200:
+          description: "A video object."
+          schema:
+            $ref: "#/definitions/Video"
+        500:
+          description: "Internal server error."
+
+  /videos/{videoId}/like:
+    post:
+      summary: "Like a video"
+      description: "Like a video specified by its ID."
+      parameters:
+      - name: "videoId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Like registered."
+        404:
+          description: "Video not found."
+        500:
+          description: "Internal server error."
+
+  /videos/{videoId}/dislike:
+    post:
+      summary: "Dislike a video"
+      description: "Dislike a video specified by its ID."
+      parameters:
+      - name: "videoId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Dislike registered."
+        404:
+          description: "Video not found."
+        500:
+          description: "Internal server error."
+
+  /videos/{videoId}/comments:
+    post:
+      summary: "Comment on a video"
+      description: "Post a comment on a video specified by its ID."
+      parameters:
+      - name: "videoId"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "comment"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Comment"
+      responses:
+        201:
+          description: "Comment posted."
+        404:
+          description: "Video not found."
+        500:
+          description: "Internal server error."
+
+definitions:
+  Video:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      title:
+        type: "string"
+      url:
+        type: "string"
+      likes:
+        type: "integer"
+      dislikes:
+        type: "integer"
+      comments:
+        type: "array"
+        items:
+          $ref: "#/definitions/Comment"
+
+  Comment:
+    type: "object"
+    required:
+    - "author"
+    - "text"
+    properties:
+      author:
+        type: "string"
+      text:
+        type: "string"
