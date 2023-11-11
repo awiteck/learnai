@@ -9,10 +9,10 @@ schemes:
 - "https"
 
 paths:
-  /videos/next:
+  /facts/next:
     get:
-      summary: "Get next video content"
-      description: "Retrieve the next video content based on user interaction and preferences."
+      summary: "Get next fact content"
+      description: "Retrieve the next fact based on user interaction and preferences."
       parameters:
       - name: "preference"
         in: "query"
@@ -21,18 +21,18 @@ paths:
         description: "User preference based on button pressed."
       responses:
         200:
-          description: "A video object."
+          description: "A fact object."
           schema:
-            $ref: "#/definitions/Video"
+            $ref: "#/definitions/fact"
         500:
           description: "Internal server error."
 
-  /videos/{videoId}/like:
+  /facts/{factId}/like:
     post:
-      summary: "Like a video"
-      description: "Like a video specified by its ID."
+      summary: "Like a fact"
+      description: "Like a fact specified by its ID."
       parameters:
-      - name: "videoId"
+      - name: "factId"
         in: "path"
         required: true
         type: "string"
@@ -40,16 +40,16 @@ paths:
         200:
           description: "Like registered."
         404:
-          description: "Video not found."
+          description: "fact not found."
         500:
           description: "Internal server error."
 
-  /videos/{videoId}/dislike:
+  /facts/{factId}/dislike:
     post:
-      summary: "Dislike a video"
-      description: "Dislike a video specified by its ID."
+      summary: "Dislike a fact"
+      description: "Dislike a fact specified by its ID."
       parameters:
-      - name: "videoId"
+      - name: "factId"
         in: "path"
         required: true
         type: "string"
@@ -57,16 +57,16 @@ paths:
         200:
           description: "Dislike registered."
         404:
-          description: "Video not found."
+          description: "fact not found."
         500:
           description: "Internal server error."
 
-  /videos/{videoId}/comments:
+  /facts/{factId}/comments:
     post:
-      summary: "Comment on a video"
-      description: "Post a comment on a video specified by its ID."
+      summary: "Comment on a fact"
+      description: "Post a comment on a fact specified by its ID."
       parameters:
-      - name: "videoId"
+      - name: "factId"
         in: "path"
         required: true
         type: "string"
@@ -79,19 +79,63 @@ paths:
         201:
           description: "Comment posted."
         404:
-          description: "Video not found."
+          description: "fact not found."
+        500:
+          description: "Internal server error."
+
+  /users/register:
+    post:
+      summary: "Register a new user"
+      description: "Create a new user account with email and password."
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          type: "object"
+          required:
+            - "email"
+            - "password"
+          properties:
+            email:
+              type: "string"
+            password:
+              type: "string"
+      responses:
+        201:
+          description: "User registration successful."
+        400:
+          description: "Invalid input for registration."
+        500:
+          description: "Internal server error."
+
+  /users/profile:
+    post:
+      summary: "Create or update user profile"
+      description: "Create or update a user's profile information after registration."
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/UserProfile"
+      responses:
+        200:
+          description: "User profile created or updated successfully."
+        400:
+          description: "Invalid user profile data."
         500:
           description: "Internal server error."
 
 definitions:
-  Video:
+  fact:
     type: "object"
     properties:
       id:
         type: "string"
       title:
         type: "string"
-      url:
+      body:
         type: "string"
       likes:
         type: "integer"
@@ -105,10 +149,23 @@ definitions:
   Comment:
     type: "object"
     required:
-    - "author"
-    - "text"
+      - "author"
+      - "text"
     properties:
       author:
         type: "string"
       text:
         type: "string"
+
+  UserProfile:
+    type: "object"
+    properties:
+      userId:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      bio:
+        type: "string"
+      # Additional user profile fields can be added here
