@@ -5,7 +5,7 @@ const { Pool } = require("pg");
 
 // Firebase
 var admin = require("firebase-admin");
-var serviceAccount = require("path/to/serviceAccountKey.json");
+var serviceAccount = require("./learnai-42cfd-firebase-adminsdk-z1h06-998491a32b.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
@@ -15,12 +15,7 @@ const port = process.env.PORT || 3000;
 const connectionString = process.env.DATABASE_URL;
 
 const pool = new Pool({
-  connectionString: connectionString,
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_DATABASE,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
+  connectionString: process.env.DB_URL,
 });
 
 app.use(express.json());
