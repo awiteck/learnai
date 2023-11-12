@@ -1,0 +1,6 @@
+apiserver/.env
+apiserver/*.json
+apiserver/node_modules
+apiserver/.ebextensions
+
+ios/learnai.xcodeproj/project.xcworkspace/xcuserdata/danielhu.xcuserdatad/
